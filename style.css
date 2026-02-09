@@ -1,1 +1,293 @@
-/* Add your CSS here */
+/* =========================
+   Intel Timeline - CSS only
+   Works with your current HTML
+   (header > div > img/h1/p)
+   (section > div > h2/h3/p)
+   ========================= */
+
+/* ---- Reset / Base ---- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+:root{
+  --intel-900:#003a8c;
+  --intel-700:#0068b5;
+  --intel-500:#00a0df;
+
+  --page:#f4f7fb;
+  --card:#ffffff;
+  --text:#0b1220;
+  --muted:#526174;
+
+  --radius:18px;
+  --shadow: 0 12px 30px rgba(0,20,60,.14);
+  --shadow-soft: 0 8px 18px rgba(0,20,60,.10);
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--page);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ---- Hero ---- */
+header{
+  min-height: 48vh;
+  display: grid;
+  place-items: center;
+  padding: 56px 18px 64px;
+  text-align: center;
+  color: #fff;
+
+  background:
+    radial-gradient(1200px 600px at 20% 15%, rgba(0,160,223,.55), transparent 60%),
+    radial-gradient(900px 500px at 80% 20%, rgba(0,104,181,.55), transparent 55%),
+    linear-gradient(180deg, var(--intel-700), var(--intel-900));
+}
+
+header > div{
+  width: min(920px, 100%);
+}
+
+header img{
+  width: 96px;         /* resize svg logo here */
+  height: auto;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 10px 25px rgba(0,0,0,.25));
+}
+
+header h1{
+  margin: 0 0 14px;
+  font-size: clamp(2rem, 3.5vw, 3.1rem);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+header p{
+  margin: 0 auto;
+  max-width: 62ch;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: rgba(255,255,255,.92);
+}
+
+/* ---- Timeline container (your <section>) ---- */
+section{
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 34px 18px 18px;
+
+  display: flex;
+  gap: 18px;
+
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-gutter: stable;
+
+  /* Extra credit: scroll snap */
+  scroll-snap-type: x mandatory;
+  scroll-padding: 18px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* optional scrollbar styling */
+section::-webkit-scrollbar{ height: 10px; }
+section::-webkit-scrollbar-thumb{
+  background: rgba(0,58,140,.35);
+  border-radius: 999px;
+}
+section::-webkit-scrollbar-track{
+  background: rgba(255,255,255,.7);
+  border-radius: 999px;
+}
+
+/* ---- Cards (your <section> > <div>) ---- */
+section > div{
+  flex: 0 0 320px;
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid rgba(0,58,140,.10);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+
+  position: relative;
+
+  /* Snap point */
+  scroll-snap-align: start;
+
+  transform: translateY(0);
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+section > div:hover{
+  transform: translateY(-6px);
+  box-shadow: var(--shadow);
+  border-color: rgba(0,160,223,.35);
+}
+
+/* left accent bar */
+section > div::before{
+  content:"";
+  position:absolute;
+  left:0; top:0;
+  width:6px; height:100%;
+  background: linear-gradient(180deg, var(--intel-500), var(--intel-900));
+  opacity:.9;
+}
+
+/* =========================
+   Timeline Images (CSS only)
+   ========================= */
+
+/* Common image block */
+section > div::after{
+  content:"";
+  display:block;
+  height:165px;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-top: 1px solid rgba(0,58,140,.10);
+  border-bottom: 1px solid rgba(0,58,140,.10);
+}
+
+/* Image mapping by order */
+section > div:nth-child(1)::after{
+  background-image: url("img/1.jpg");
+}
+
+section > div:nth-child(2)::after{
+  background-image: url("img/2.jpg");
+}
+
+section > div:nth-child(3)::after{
+  background-image: url("img/3.jpg");
+}
+
+section > div:nth-child(4)::after{
+  background-image: url("img/4.jpg");
+}
+
+section > div:nth-child(5)::after{
+  background-image: url("img/5.jpg");
+}
+
+section > div:nth-child(6)::after{
+  background-image: url("img/6.jpg");
+}
+
+section > div:nth-child(7)::after{
+  background-image: url("img/7.jpg");
+}
+
+section > div:nth-child(8)::after{
+  background-image: url("img/8.jpg");
+}
+
+section > div:nth-child(9)::after{
+  background-image: url("img/9.jpg");
+}
+
+/* We want headings ABOVE the fake image block:
+   so we add padding to the card, then pull ::after up by ordering trick:
+   easiest is to give headings padding and make ::after appear after them naturally.
+*/
+section > div{
+  padding-top: 16px;
+}
+
+/* Year + Title */
+section > div h2{
+  margin: 0 16px 0;
+  font-size: 1.6rem;
+  color: var(--intel-900);
+  letter-spacing: .01em;
+}
+
+section > div h3{
+  margin: 6px 16px 12px;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+/* Summary paragraph */
+section > div p{
+  margin: 0;
+  padding: 14px 16px 18px;
+  color: var(--muted);
+  font-size: .98rem;
+
+  /* hover reveal animation baseline */
+  max-height: 4.6em;         /* clamp-ish */
+  overflow: hidden;
+  transition: max-height 220ms ease, color 220ms ease;
+}
+
+/* Hover = reveal more text */
+section > div:hover p{
+  max-height: 12em;
+  color: var(--text);
+}
+
+/*Pictures*/
+
+section > div::after{
+  transition: transform 250ms ease;
+}
+
+section > div:hover::after{
+  transform: scale(1.05);
+}
+
+section > div::after{
+  position: relative;
+}
+
+section > div::after{
+  background-blend-mode: overlay;
+}
+
+section > div:nth-child(1)::after{
+  background-image:
+    linear-gradient(rgba(0,58,140,.15), rgba(0,58,140,.15)),
+    url("img/1.jpg");
+}
+
+/* ---- Hint line ---- */
+body > p{
+  text-align:center;
+  color: var(--muted);
+  margin: 16px 0 34px;
+  padding: 0 18px;
+  font-size: .90rem;
+}
+
+/* ---- Responsive: stack vertically on smaller screens ---- */
+@media (max-width: 720px){
+  header{
+    min-height: auto;
+    padding: 42px 16px 46px;
+  }
+
+  section{
+    flex-direction: column;
+    overflow-x: visible;
+    scroll-snap-type: none;
+  }
+
+  section > div{
+    flex: 1 1 auto;
+  }
+}
+
+/* ---- Reduced motion accessibility ---- */
+@media (prefers-reduced-motion: reduce){
+  section > div,
+  section > div p{
+    transition: none;
+  }
+}
